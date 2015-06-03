@@ -29,9 +29,9 @@
         </dependency>
      
         <dependency>
-            <groupId>fr.lgi2p.kid</groupId>
-            <artifactId>slib</artifactId>
-            <version>0.0.5</version>
+            <groupId>com.github.sharispe</groupId>
+            <artifactId>slib-sml</artifactId>
+            <version>0.9.1</version>
         </dependency>
      
         <dependency>

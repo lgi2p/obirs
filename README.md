@@ -1,54 +1,181 @@
-# Obirs
+# OBIRS – Ontology Based Information Retrieval System
 
-Obirs is a service that allows you to find resources indexed with concepts.
+To take advantages of knowledge models (ontologies) information retrieval systems may use the relationships between concepts to extend or reformulate queries. 
+Our ontology based information retrieval system (OBIRS) relies on a domain ontology and on resources that are indexed using its concepts. 
+As an example, these resources can be genes annotated by concepts of the Gene Ontology or PubMed articles annotated using the MeSH (Medical Subject Headings).
+ 
+Considering a set of weighted concepts - the weight defines the importance to give to a concept - OBIRS estimates the overall relevance of each resource w.r.t. a given query. 
+The retrieved resources are ordered according to their overall scores, so that the most relevant resources (indexed with the exact query concepts) are ranked higher than the least relevant ones (indexed with hypernyms or hyponyms of query concepts). 
 
+This project proposes a in-memory JAVA implementation of OBIRS. 
+In order to provide a real-world example of use, the implementation considers specific input and output data.
+We therefore consider that the aim is to query a set of documents annotated by concepts defined into an ontology.
+Nevertheless, note that the core of OBIRS is generic enough in order to be adapted to any collection of item annotated by concepts defined into an ontology. 
+Do not hesitate to contact us if you want to adapt the example.
 
-## Dependancies
+More details about the theoretical contributions implemented into OBIRS can be found in the following reference:
+`
+User Centered and Ontology Based Information Retrieval System for Life Sciences 
+Mohameth-François Sy, Sylvie Ranwez, Jacky Montmain, Armelle Regnault, Michel Crampes, Vincent Ranwez. 
+In BMC Bioinformatics, 13(Suppl 1):S4, 2012
+`
 
-mvn install:install-file -Dfile=slib-dist-0.0.5-all-jar.jar -DgroupId=fr.lgi2p.kid -DartifactId=slib -Dversion=0.0.5 -Dpackaging=jar
+## Installation
 
+Please use Maven to compile, build the project and generate the jar that can be used using a command-line interface. 
+You can then use the generated JAR (target/obirs.jar).
+Then use 
+`java -jar target/obirs.jar`
+```
+usage: obirs
+ -c,--concept index <arg>   concept labels file path URI<TAB>label
+ -f,--fast-query <arg>      use fast query
+ -g,--groupwise <arg>       use groupwise calculation
+ -i,--doc index <arg>       index file path
+ -o,--ontology <arg>        ontology file path (RDF/XML Format)
+ -q,--query-file <arg>      query file
+ -r,--refined-query <arg>   refined query
+```
 
-## Indexexing
-The indexation file contains all the documents. The file must have one document
-by line serialized in JSON :
+## Format
 
-{"id": "doc1","title": "document title","conceptIds": ["conceptId1", "conceptId2"],"href": "http://blablah/doc1/show"}
-{"id": "doc2","title": "document title 2","conceptIds": ["conceptId2", "conceptId3"],"href": "http://blablah/doc2/show"}
+### Collection to query (argument -i)
 
-## Query examples
+OBIRS search relevant items into a collection. 
+These items are expected to be defined into a input JSON file (one instance description per line).
+The JSON syntax used to define an item is the following: 
 
-### simple query
+```
+{"uri":"1","label":"f1544.json","annots":["http://www.cea.fr/ontotoxnuc#Tritium"],"href":"/data/toxnuc/toxnuc_annots_5_11_14/annots/f1544.json"}
+{"uri":"2","label":"f1064.json","annots":["http://www.cea.fr/ontotoxnuc#Fluorescence","http://www.cea.fr/ontotoxnuc#Urine","http://www.cea.fr/ontotoxnuc#Uranium","http://www.cea.fr/ontotoxnuc#Kina
+se","http://www.cea.fr/ontotoxnuc#InVivo","http://www.cea.fr/ontotoxnuc#Phosphorylation"],"href":"/data/toxnuc/toxnuc_annots_5_11_14/annots/f1064.json"}
+```
 
-{"concepts": [{"id": "D015373", "weight": 0.5},{"id":"D006801", "weight": 0.5}]}
+### Ontology (argument -o)
 
-### refined query
+The ontology must be specified into RDF/XML format. 
+Adaptations of the source code can easily been made in order to consider other formats.  
+
+### Concept labels (argument -c)
+
+This implementation requires a file that specifies a label associated to each concept. This is required to generate the output (and is not mandatory for the core of Obirs).
+Format: ` URI<TAB>label `
+
+```
+http://www.cea.fr/AlIII	Al (III)
+http://www.cea.fr/DeriveDelArsenic	arsenic derivative
+http://www.cea.fr/ontoto#DisciplineMedicale	medical discipline
+http://www.cea.fr/ontoto#Immunoprecipitation	immunoprecipitation
+http://www.cea.fr/ontoto#Proteomique	proteomic
+http://www.cea.fr/ontotoxnu#CP_FMS	CP/MS
+http://www.cea.fr/ontotoxnu#CsI	Cs (I)
+http://www.cea.fr/ontotoxnuc#13C	13C
+http://www.cea.fr/ontotoxnuc#14C	14C
+http://www.cea.fr/ontotoxnuc#79Se	79Se
+
+```
+
+### Query examples 
+
+#### simple query (content of file argument -q)
+
+```
+{"concepts": [{"uri": "http://www.cea.fr/ontotoxnuc#AnalyseStatistique", "weight": 0.5},{"uri":"http://www.cea.fr/ontotoxnuc#Uranium", "weight": 0.5}]}
+```
+
+#### refined query (content of file argument -r)
+```
 {
-    "query": {
-        "concepts": [{"id": "D015373", "weight": 0.5},{"id":"D006801", "weight": 0.5}]
-    },
-    "selectedDocIds": ["42172", "42697", "42719"],
-    "rejectedDocIds": ["42759"]
+	"selectedItemURIs":["http://www.mines-ales.fr/obirs/items/1132","http://www.mines-ales.fr/obirs/items/1133"],
+	"rejectedItemURIs":["http://www.mines-ales.fr/obirs/items/1131"],
+	"query": {
+		"concepts": [
+			{"uri": "http://www.cea.fr/ontotoxnuc#AnalyseStatistique", "weight": 0.5},
+			{"uri":"http://www.cea.fr/ontotoxnuc#Uranium", "weight": 0.5}
+			]
+	}
 }
+```
 
-## Example
 
-### query
+### Usage examples
 
-String query = "{\"concepts\": [{\"id\": \"D015373\", \"weight\": 0.5},{\"id\":\"D006801\", \"weight\": 0.5}]}";
-String results = new Obirs("/path/to/ontology.xml", "/path/to/index.json").query(query);
+#### simple query
 
-### refine query
+Query the collection of items considering a specific set of concepts associated to weights.
 
-String refinedQuery = "{\"query\": {\"concepts\": [{\"id\": \"D015373\", \"weight\": 0.5},{\"id\":\"D006801\", \"weight\": 0.5}]},\"selectedDocIds\": [\"42172\", \"42697\", \"42719\"],\"rejectedDocIds\": [\"42759\"]}";
-String results = new Obirs("/path/to/ontology.xml", "/path/to/index.json").refineQuery(refinedQuery);
 
-## Example with CURL
+command line 
+`
+java -jar target/obirs.jar -o /data/toxnuc/ontologie_toxnuc_intd_aclp.owl -i /data/toxnuc/toxnuc_annots_5_11_14.json -c /data/toxnuc/ontologie_toxnuc_intd_aclp.owl.labels.index.tsv -q /data/toxnuc/query
+`
 
-### query
-java -jar obirs.jar -o ~/Documents/Projects/Obirs+UI/ontology/mesh/desc2013.xml -i ~/Documents/Projects/Obirs+UI/samples/index.json  -q '{"concepts": [{"id": "D015373", "weight": 0.5},{"id":"D006801", "weight": 0.5}], "defaultNameSpace": "http://obirs"}'
+query 
+```
+{"concepts": [{"uri": "http://www.cea.fr/ontotoxnuc#AnalyseStatistique", "weight": 0.5},{"uri":"http://www.cea.fr/ontotoxnuc#Uranium", "weight": 0.5}]}
+```
 
-### fast query
-java -jar obirs.jar -o ~/Documents/Projects/Obirs+UI/ontology/mesh/desc2013.xml -i ~/Documents/Projects/Obirs+UI/samples/index.json  -q '{"concepts": [{"id": "D006801", "weight": 0.17},{"id":"D002650", "weight": 0.17},{"id": "D000223", "weight": 0.17},{"id": "D006701", "weight": 0.17},{"id": "D003954", "weight": 0.17},{"id": "D006699", "weight": 0.17}, "defaultNameSpace": "http://obirs"}' -f true
 
-### refine query
-java -jar obirs.jar -o ~/Documents/Projects/Obirs+UI/ontology/mesh/desc2013.xml -i ~/Documents/Projects/Obirs+UI/samples/index.json  -r '{"query": {"concepts": [{"id": "D015373", "weight": 0.5},{"id":"D006801", "weight": 0.5}], "defaultNameSpace": "http://obirs"}, "selectedDocIds": ["42172", "42697", "42719"], "rejectedDocIds": ["42759"]}'
+result
+```
+{
+    "results": [
+            {
+                "itemURI":"ns0:1298",
+                "score":1.0,
+                "itemId":"1298",
+                "concepts":[{"relationType":"ns2:EXACT","score":1.0,"queryConceptURI":"ns1:AnalyseStatistique","matchingConceptURI":"ns1:AnalyseStatistique"},{"relationType":"ns2:EXACT","score":1.0,"queryConceptURI":"ns1:Uranium","matchingConceptURI":"ns1:Uranium"}],"href":"\/data\/toxnuc\/toxnuc_annots_5_11_14\/annots\/f1129.json","itemTitle":"f1129.json"},
+            {"itemURI":"ns0:379","score":1.0,"itemId":"379","concepts":[{"relationType":"ns2:EXACT","score":1.0,"queryConceptURI":"ns1:AnalyseStatistique","matchingConceptURI":"ns1:AnalyseStatistique"},{"relationType":"ns2:EXACT","score":1.0,"queryConceptURI":"ns1:Uranium","matchingConceptURI":"ns1:Uranium"}],"href":"\/data\/toxnuc\/toxnuc_annots_5_11_14\/annots\/f672.json","itemTitle":"f672.json"},
+    ]
+    "infoConcepts":[
+        {"label":"statistical analysis","uri":"ns1:AnalyseStatistique"},
+        {"label":"actinide","uri":"ns1:Actinide"},
+        {"label":"uranium","uri":"ns1:Uranium"},
+        {"label":"plutonium","uri":"ns1:Plutonium"},
+        ...
+    ],
+    "prefixes":[
+        {"ns":"http:\/\/www.cea.fr\/ontotoxnuc#","prefix":"ns1"},
+        {"ns":"http:\/\/www.mines-ales.fr\/obirs\/match_type\/","prefix":"ns2"},
+        {"ns":"http:\/\/www.mines-ales.fr\/obirs\/items\/","prefix":"ns0"}
+    ]}
+}
+```
+
+
+#### Refine query
+
+Refine a query considering an expression of interested on the results of a query.
+
+command line 
+`
+java -jar target/obirs.jar -o /data/toxnuc/ontologie_toxnuc_intd_aclp.owl -i /data/toxnuc/toxnuc_annots_5_11_14.json -c  /data/toxnuc/ontologie_toxnuc_intd_aclp.owl.labels.index.tsv -r /data/toxnuc/queryToRefine
+`
+
+refine query 
+```
+{
+	"selectedItemURIs":["http://www.mines-ales.fr/obirs/items/1132","http://www.mines-ales.fr/obirs/items/1133"],
+	"rejectedItemURIs":["http://www.mines-ales.fr/obirs/items/1131"],
+	"query": {
+		"concepts": [
+			{"uri": "http://www.cea.fr/ontotoxnuc#AnalyseStatistique", "weight": 0.5},
+			{"uri":"http://www.cea.fr/ontotoxnuc#Uranium", "weight": 0.5}
+			]
+	}
+}
+```
+
+
+result
+
+```
+{"aggregator":MAX,"numberOfResults":30,"similarityMeasure":LIN,"concepts":[{"weight":1.0,"uri":"http:\/\/www.cea.fr\/ontotoxnuc#InVitro"}],"scoreThreshold":0.0,"aggregatorParameter":2.0}
+```
+
+
+# Contributors
+
+Sébastien Harispe
+
+past : Nicolas Clairon

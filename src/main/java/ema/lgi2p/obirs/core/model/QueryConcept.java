@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ema.lgi2p.obirs;
+package ema.lgi2p.obirs.core.model;
 
 public class QueryConcept {
 
