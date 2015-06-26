@@ -1,6 +1,6 @@
-package ema.lgi2p.obirs.core.index;
+package com.github.lgi2p.obirs.core.index;
 
-import ema.lgi2p.obirs.core.model.Item;
+import com.github.lgi2p.obirs.core.model.Item;
 import java.util.List;
 import org.openrdf.model.URI;
 

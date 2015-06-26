@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ema.lgi2p.obirs.core.model;
+package com.github.lgi2p.obirs.core.model;
 
-import ema.lgi2p.obirs.Conf;
+import com.github.lgi2p.obirs.Conf;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

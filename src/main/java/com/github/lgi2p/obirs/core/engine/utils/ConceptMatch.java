@@ -1,4 +1,4 @@
-package ema.lgi2p.obirs.core.engine.utils;
+package com.github.lgi2p.obirs.core.engine.utils;
 
 import org.openrdf.model.URI;
 

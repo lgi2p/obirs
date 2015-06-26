@@ -31,40 +31,16 @@
  *  The fact that you are presently reading this means that you have had
  *  knowledge of the CeCILL license and that you accept its terms.
  */
-package ema.lgi2p.obirs;
+package com.github.lgi2p.obirs.core.index;
 
-import slib.sml.sm.core.metrics.ic.utils.IC_Conf_Topo;
-import slib.sml.sm.core.metrics.ic.utils.ICconf;
-import slib.sml.sm.core.utils.SMConstants;
-import slib.sml.sm.core.utils.SMconf;
-import slib.utils.ex.SLIB_Ex_Critic;
+import com.github.lgi2p.obirs.core.model.Item;
 
 /**
- * Defines default configuration
+ *
  * @author Sébastien Harispe <sebastien.harispe@gmail.com>
  */
-public class Conf {
+public interface Indexer {
     
-    public static final String DEFAULT_URI = "http://www.mines-ales.fr/obirs";
-    public static final double DEFAULT_QUERY_AGGREGATION_PARAM_VALUE = 2.0;
-    public static final double DEFAULT_QUERY_SCORE_THRESHOLD_VALUE = 0.0;
-    public static final int DEFAULT_QUERY_NUMBER_OF_RESULT_VALUE = 30;
-    public static double DEFAULT_QUERY_FAST_SIMILARITY_THREASHOLD = 0.1;
+    public Iterable<Item> getItems();
     
-    
-    public static SMconf getDefaultPairwiseSimilarityMeasure() throws SLIB_Ex_Critic {
-        ICconf icConf = new IC_Conf_Topo(SMConstants.FLAG_ICI_SANCHEZ_2011);
-        return new SMconf("Lin_icSanchez", SMConstants.FLAG_SIM_PAIRWISE_DAG_NODE_LIN_1998, icConf);
-    }
-
-    public static SMconf getDefaultDirectGroupwiseSimilarityMeasure() throws SLIB_Ex_Critic {
-        ICconf icConf = new IC_Conf_Topo(SMConstants.FLAG_ICI_SECO_2004);
-        SMconf similarityMeasureConf = new SMconf(SMConstants.FLAG_SIM_GROUPWISE_DAG_TO, icConf);
-        return similarityMeasureConf;
-    }
-
-    public static SMconf getDefaultIndirectGroupwiseSimilarityMeasure() throws SLIB_Ex_Critic {
-        SMconf groupwiseMeasureConf = new SMconf(SMConstants.FLAG_SIM_GROUPWISE_BMA);
-        return groupwiseMeasureConf;
-    }
 }

@@ -1,9 +1,9 @@
-package ema.lgi2p.obirs.core.engine;
+package com.github.lgi2p.obirs.core.engine;
 
-import ema.lgi2p.obirs.core.model.ObirsQuery;
-import ema.lgi2p.obirs.core.model.ObirsResult;
-import ema.lgi2p.obirs.core.index.ItemCollection;
-import ema.lgi2p.obirs.core.model.Item;
+import com.github.lgi2p.obirs.core.model.ObirsQuery;
+import com.github.lgi2p.obirs.core.model.ObirsResult;
+import com.github.lgi2p.obirs.core.index.ItemCollection;
+import com.github.lgi2p.obirs.core.model.Item;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

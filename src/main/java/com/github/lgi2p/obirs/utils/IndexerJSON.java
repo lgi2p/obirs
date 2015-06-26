@@ -31,11 +31,11 @@
  *  The fact that you are presently reading this means that you have had
  *  knowledge of the CeCILL license and that you accept its terms.
  */
-package ema.lgi2p.obirs.utils;
+package com.github.lgi2p.obirs.utils;
 
-import ema.lgi2p.obirs.Conf;
-import ema.lgi2p.obirs.core.index.Indexer;
-import ema.lgi2p.obirs.core.model.Item;
+import com.github.lgi2p.obirs.Conf;
+import com.github.lgi2p.obirs.core.index.Indexer;
+import com.github.lgi2p.obirs.core.model.Item;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

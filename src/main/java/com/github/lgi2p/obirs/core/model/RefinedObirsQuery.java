@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ema.lgi2p.obirs.core.model;
+package com.github.lgi2p.obirs.core.model;
 
 import java.util.List;
 import org.openrdf.model.URI;

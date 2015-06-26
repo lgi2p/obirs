@@ -1,7 +1,7 @@
-package ema.lgi2p.obirs.core.engine;
+package com.github.lgi2p.obirs.core.engine;
 
-import ema.lgi2p.obirs.core.model.ObirsQuery;
-import ema.lgi2p.obirs.core.model.ObirsResult;
+import com.github.lgi2p.obirs.core.model.ObirsQuery;
+import com.github.lgi2p.obirs.core.model.ObirsResult;
 import java.util.List;
 import slib.utils.ex.SLIB_Ex_Critic;
 

@@ -1,15 +1,15 @@
-package ema.lgi2p.obirs.core.engine;
+package com.github.lgi2p.obirs.core.engine;
 
-import ema.lgi2p.obirs.Conf;
-import ema.lgi2p.obirs.core.model.ObirsQuery;
-import ema.lgi2p.obirs.core.model.ObirsResult;
-import ema.lgi2p.obirs.core.model.RefinedObirsQuery;
-import ema.lgi2p.obirs.core.engine.utils.ConceptMatch;
-import ema.lgi2p.obirs.core.index.ItemCollection;
-import ema.lgi2p.obirs.core.engine.utils.ConceptSim;
-import ema.lgi2p.obirs.core.model.Item;
-import ema.lgi2p.obirs.utils.JSONConverter;
-import ema.lgi2p.obirs.utils.Utils;
+import com.github.lgi2p.obirs.Conf;
+import com.github.lgi2p.obirs.core.model.ObirsQuery;
+import com.github.lgi2p.obirs.core.model.ObirsResult;
+import com.github.lgi2p.obirs.core.model.RefinedObirsQuery;
+import com.github.lgi2p.obirs.core.engine.utils.ConceptMatch;
+import com.github.lgi2p.obirs.core.index.ItemCollection;
+import com.github.lgi2p.obirs.core.engine.utils.ConceptSim;
+import com.github.lgi2p.obirs.core.model.Item;
+import com.github.lgi2p.obirs.utils.JSONConverter;
+import com.github.lgi2p.obirs.utils.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;

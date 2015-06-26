@@ -1,6 +1,6 @@
-package ema.lgi2p.obirs.utils.autocomplete;
+package com.github.lgi2p.obirs.utils.autocomplete;
 
-import ema.lgi2p.obirs.utils.JSONConverter;
+import com.github.lgi2p.obirs.utils.JSONConverter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;

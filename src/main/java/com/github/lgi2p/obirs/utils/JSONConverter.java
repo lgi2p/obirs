@@ -31,14 +31,14 @@
  *  The fact that you are presently reading this means that you have had
  *  knowledge of the CeCILL license and that you accept its terms.
  */
-package ema.lgi2p.obirs.utils;
+package com.github.lgi2p.obirs.utils;
 
-import ema.lgi2p.obirs.core.model.ObirsQuery;
-import ema.lgi2p.obirs.core.model.ObirsResult;
-import ema.lgi2p.obirs.core.model.RefinedObirsQuery;
-import ema.lgi2p.obirs.core.engine.utils.ConceptMatch;
-import ema.lgi2p.obirs.utils.IndexerJSON.ItemMetadata;
-import ema.lgi2p.obirs.utils.autocomplete.Autocompletion_Trie;
+import com.github.lgi2p.obirs.core.model.ObirsQuery;
+import com.github.lgi2p.obirs.core.model.ObirsResult;
+import com.github.lgi2p.obirs.core.model.RefinedObirsQuery;
+import com.github.lgi2p.obirs.core.engine.utils.ConceptMatch;
+import com.github.lgi2p.obirs.utils.IndexerJSON.ItemMetadata;
+import com.github.lgi2p.obirs.utils.autocomplete.Autocompletion_Trie;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;

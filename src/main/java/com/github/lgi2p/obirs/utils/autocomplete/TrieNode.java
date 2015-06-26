@@ -1,4 +1,4 @@
-package ema.lgi2p.obirs.utils.autocomplete;
+package com.github.lgi2p.obirs.utils.autocomplete;
 
 import java.util.Collection;
 import java.util.HashMap;
