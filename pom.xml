@@ -69,7 +69,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ema.lgi2p.obirs.App</mainClass>
+                            <mainClass>com.github.lgi2p.obirs.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
